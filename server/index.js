@@ -6,6 +6,9 @@ const mongoose = require('mongoose');
 //Initialize new instance of Express
 const app = express();
 
+//Body Parser
+app.use(bodyParser.json())
+
 //Require Database
 const db = require('../config/keys').MongoURI;
 
@@ -21,9 +24,6 @@ const users = require('./routes/api/users');
 app.use('/api/routines', routines);
 app.use('/api/users', users);
 
-// BodyParser
-app.use(express.urlencoded({ extended: false }));
-app.use(cors());
 
 
 
