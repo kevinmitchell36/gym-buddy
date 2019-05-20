@@ -6,14 +6,16 @@ const mongoose = require('mongoose');
 //Initialize new instance of Express
 const app = express();
 
+app.use(cors())
+
 //Body Parser
 app.use(bodyParser.json())
 
 //Require Database
-const db = require('../config/keys').MongoURI;
+const uri = require('../config/keys').MongoURI;
 
 // Establish Connection
-mongoose.connect(db, {useNewUrlParser: true})
+mongoose.connect(uri, {useNewUrlParser: true})
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
