@@ -9,13 +9,13 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/signup', (req, res) => {
-  const {name, username, email, password} = req.body;
+router.post('/', (req, res) => {
+  const {name, username, email, password, password_confirm} = req.body;
   let errors = []
 
-  if( !name || !username || !email || !password) {
-    errors.push("All fields are required");
-  }
+  // if( !name || !username || !email || !password || !password_confirm) {
+  //   errors.push("All fields are required");
+  // }
 
   if(errors.length > 0) {
     console.log(errors);

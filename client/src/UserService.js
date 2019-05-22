@@ -22,6 +22,15 @@ class UserService {
       }
     })
   }
+
+  static newUserPost(name, username, email, password) {
+    return axios.post(url, {
+      name, 
+      username,
+      email,
+      password
+    });
+  }
 }
 
 export default UserService;
