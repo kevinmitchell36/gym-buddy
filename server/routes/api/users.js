@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../../models/user');
+const User = require('../../../models/User');
 const bcrypt = require('bcryptjs');
+const passport = require('passport');
 
 router.get('/', (req, res) => {
   User.find({}).then((users) => {
@@ -13,9 +14,17 @@ router.post('/', (req, res) => {
   const {name, username, email, password, password_confirm} = req.body;
   let errors = []
 
-  // if( !name || !username || !email || !password || !password_confirm) {
-  //   errors.push("All fields are required");
-  // }
+  if(!name) {
+      errors.push("name is required");
+  } else if(!username) {
+      errors.push("username is required");
+  } else if(!email) {
+      errors.push("email is required");
+  } else if(!password) {
+      errors.push("password is required");
+  } else if(!password_confirm) {
+      errors.push("password_confirm is required");
+  }
 
   if(errors.length > 0) {
     console.log(errors);
@@ -40,6 +49,13 @@ router.post('/', (req, res) => {
   }
 });
 
+router.post('/login', (res, req, next) => {
+  passort.authenticate('local',  {
+    successRedirect: '/home',
+    failureRedirect: '/login',
+    failureFlash: true
+  })(req, res, next);
+})
 
 module.exports = router;
 

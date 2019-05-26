@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     async signup () {
-      await UserService.newUserPost(this.name, this.username, this.email, this.password);
+      await UserService.newUserPost(this.name, this.username, this.email, this.password, this.password_confirm);
     } 
   }
 }

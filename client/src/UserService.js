@@ -23,12 +23,13 @@ class UserService {
     })
   }
 
-  static newUserPost(name, username, email, password) {
+  static newUserPost(name, username, email, password, password_confirm) {
     return axios.post(url, {
       name, 
       username,
       email,
-      password
+      password,
+      password_confirm
     });
   }
 }

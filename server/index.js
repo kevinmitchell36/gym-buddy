@@ -2,14 +2,24 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const passport = require('passport');
+
 
 //Initialize new instance of Express
 const app = express();
 
-app.use(cors())
+// Require passport config
+require('../config/passport')(passport); 
+
+// Use cors
+app.use(cors());
 
 //Body Parser
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Require Database
 const uri = require('../config/keys').MongoURI;
