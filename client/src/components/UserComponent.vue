@@ -1,15 +1,7 @@
 <template>
+  
   <div class="container">
-    <h1>Users</h1>
-    <div class="users"
-      v-for="(user, index) in users"
-      v-bind:item="user"
-      v-bind:index="index"
-      v-bind:key="user._id"
-    >
-      <p>{{user.name}}</p>
-      <p>{{user.username}}</p>
-    </div>
+    <p>Welcome </p>
   </div>
 </template>
 

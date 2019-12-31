@@ -7,7 +7,7 @@ const url = 'http://localhost:3000/api/users';
 
 class UserService {
 
-  static getUsers() {
+  static getCurrentUser() {
     return new Promise(async (resolve, reject) => {
       try {
         const res = await axios.get(url);
