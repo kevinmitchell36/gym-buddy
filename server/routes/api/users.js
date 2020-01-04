@@ -51,26 +51,55 @@ router.post('/', (req, res) => {
 });
 
 // router.post('/login', (req, res, next) => {
-
-//   // passport.authenticate('local',  {
-//   //   successRedirect: "/api/users/success"
-//   //   // failureRedirect: '/failure'
-//   //   //  successFlash: 'Welcome!'
-//   // })(req, res, next);
+//   passport.authenticate('local',  {
+//     successRedirect: "/api/users/user_data"
+//     // failureRedirect: '/failure'
+//     //  successFlash: 'Welcome!'
+//   })(req, res, next);
 // });
 
-router.post('/login',
-  passport.authenticate('local'),
-  (req, res) => {
-    // If this function gets called, authentication was successful.
-    // `req.user` contains the authenticated user.
-    currentUser = req.user.username
-    console.log(req.user.username)
-    res.redirect('/api/users/success');
-  });
+// router.post('/login',
+//   passport.authenticate('local'),
+//   function(req, res) {
+//     // If this function gets called, authentication was successful.
+//     // `req.user` contains the authenticated user.
+//     console.log(req.session);
+//     res.redirect('/api/users/user_data');
+//   });
 
-router.get('/success', (req, res) => {
-  res.send(currentUser)
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    console.log("is it safe?")
+    if (err) { 
+      console.log("hello");
+      return next(err); 
+    }
+    if (!user) { 
+      console.log("not user");
+      return res.redirect('/login'); 
+    }
+    req.logIn(user, function(err) {
+      if (err) { 
+        console.log("logIn");
+        return next(err);
+       }
+      return res.redirect('/api/users/user_data');
+    });
+  })(req, res, next);
+});
+
+
+
+router.get('/user_data/', function(req, res) {
+  if (req.user === undefined) {
+      console.log(req.sessionStore.sessions);
+      // The user is not logged in
+      res.json({});
+  } else {
+      res.json({
+          username: req.body.user.username
+      });
+  }
 });
 
 router.get('/failure', (req, res) => {

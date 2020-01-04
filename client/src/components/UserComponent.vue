@@ -12,13 +12,13 @@ export default {
   name: 'UserComponent',
   data() {
     return {
-      users: [],
+      user: "",
       error: ""
     }
   },
   async created() {
     try {
-      this.users = await UserService.getUsers();
+      this.user = await UserService.getCurrentUser();
     } catch(err) {
       this.error = err.message;
     }

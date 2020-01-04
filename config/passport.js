@@ -27,15 +27,21 @@ module.exports = (passport) => {
   );
 
   passport.serializeUser((user, done) => {
-    done(null, user.id, user.username);
+    done(null, user.id);
     console.log(user.id);
     console.log(user.username);
   });
 
   passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
-      done(err, user);
-    });
+    try {
+      console.log("deserialize?");
+      User.findById(id, (err, user) => {
+        console.log("Hello");
+        done(err, user);
+      });
+    } catch (e) {
+      console.log(e);
+    }
   });
   
 }

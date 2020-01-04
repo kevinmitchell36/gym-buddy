@@ -14,14 +14,24 @@ const app = express();
 // Require passport config
 require('../config/passport')(passport); 
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Credentials",true);
-  next();
-});
 
 // Use cors
 app.use(cors());
+
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+//   res.header("Access-Control-Allow-Credentials",true);
+//   next();
+// });
+
+app.use ((req, res, next) => {
+  res.header ('Access-Control-Allow-Origin', 'http://localhost:8080');
+  res.header ('Access-Control-Allow-Headers', 'Origin, X-Requested-With, X-AUTHENTICATION, X-IP, Content-Type, Accept');
+  res.header ('Access-Control-Allow-Credentials', true);
+  res.header ('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next()
+});
+
 
 //Body Parser
 app.use(bodyParser.json());
@@ -38,8 +48,13 @@ mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err));
 
+
+  
 app.use(session({
   secret: 'secret',
+  cookie: {
+    secure: true
+  },
   resave: true,
   saveUninitialized: true
   })
